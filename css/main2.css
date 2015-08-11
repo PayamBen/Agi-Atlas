@@ -1,0 +1,160 @@
+/* Header & footer*/
+header {
+	background-color:#006B6B;
+	border-bottom:solid #898989;
+	padding:10px 0 5px; 0;
+	margin:0px;
+}
+
+#con1, #con2 {
+	display:inline;
+}
+
+@media screen and (max-width: 450px) {
+	
+   
+
+   #main {
+	padding-bottom: 70px; /* must be same height as the footer */
+	min-width: 100%;	
+   }
+	#con1, #con2 {
+		display:block;
+	}
+}
+
+/* main tags  */
+h1 {
+	color:#fff;
+	font-size:140%;
+	/*font-family: Arial, Helvetica, sans-serif;*/
+	width:100%;
+	text-align: center;
+	margin:0px;
+	font-weight: 200;
+	display:inline;
+}
+h3 {
+	color:#fff;
+	font-size:120%;
+	margin-top:15px;
+}
+h4 {
+	color:#fff;
+	font-size:120%;
+	margin-top:15px;
+	margin-bottom:10px;
+
+}
+html {
+	margin:0px;
+	padding:0px;
+}
+body {
+	background-color:#343434;
+	margin:0px;
+	padding:0px;
+	color: white;
+	font-weight:600;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+p, a {
+	font-size:120%;
+}
+
+table, th, td {
+   border: 1px solid #fff;
+	padding:5px 15px;
+} 
+
+th {
+	text-align:center;
+	font-weight:600;
+}
+
+/*custom tags */
+
+#main {
+	overflow:auto;
+	padding-bottom: 50px; /* must be same height as the footer */	
+	min-height:100%;
+	width:60%;
+	margin:auto;
+}
+
+#menu {
+	background-color:#006B6B;
+	border:solid #898989;
+  	height: 200px;
+	width:260px;
+	margin:10px auto;
+	padding-left:15px;
+}
+
+.mline {
+	display:inline;
+	float:right;
+	margin-right:5px;
+
+}
+
+select{
+      margin-bottom:15px;
+   }
+
+#mmenu {
+	display:inline;
+	cursor:pointer;
+	border:solid 1px;
+	padding:5px;
+}
+
+#controls {
+	display: none;
+}
+
+.mbutton {
+	display:inline;
+	cursor:pointer;
+	border:solid 1px;
+	padding:5px;
+}
+
+#results {
+	display: none;
+}
+
+.start, #next {
+	display:inline;
+	cursor:pointer;
+	border:solid 1px;
+	padding:5px 20px;
+}
+
+#next {
+	color: white;
+	text-decoration:none;
+}
+
+#aOne, #aTwo, #aThree, #aFour, #aFive  {
+	display:inline;
+	
+} 
+
+#ansInpOne, #ansInpTwo {
+	margin-bottom:15px;
+}
+
+.result {
+	margin: 5px 0 0 0;
+}
+
+.centre {
+	width:100%;
+	text-align: center;
+}
+
+.green {
+	color:#009933;
+}
