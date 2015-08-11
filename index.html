@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>World Cities</title>
+<link rel="stylesheet" href="css/main2.css" />
+</head>
+
+<body>
+<header>
+<h1>Capital Cities Quiz</h1>
+<div class="mline">
+<div id="mmenu">O</div>
+<div class="start" >Start</div>
+</div>
+</header>
+<div id="main">
+	<div id="controls">
+		<p id="question"><p>
+		<div id="ansInpOne"><label>Your answer: </label><input type=text id="answer"></div>
+		<div id="ansInpTwo"><label>Your answer:</label>
+			<div class="opt"><input type="radio" name="answer2" value="One" id="vOne"/><div id="aOne">one</div></div>
+			<div class="opt"><input type="radio"  name="answer2" value="Two" id="vTwo" /><div id="aTwo">two</div></div>
+			<div class="opt"><input type="radio" name="answer2" value="Three" id="vThree" /><div id="aThree">three</div></div>
+			<div class="opt"><input type="radio" name="answer2" value="Four" id="vFour" /><div id="aFour">Four</div></div>
+			<div class="opt"><input type="radio" name="answer2" value="Five" id="vFive" /><div id="aFive">Five</div></div>
+		</div>
+		<div>
+			<div id="next">Next >></div>
+		</div>
+	</div>
+	<div id="results">
+	</div>
+<dic id="main">
+<div id="menu">
+<h2>Game Menu</h2>
+<div id="con1">
+<label>Number of questions</label>
+ <select id="selNo">
+  <option value="1">1</option>
+  <option value="3">3</option>
+  <option value="5">5</option>
+  <option value="10">10</option>
+</select> 
+</div>
+<div id="con2">
+	<label>Game type</label>
+	<select id="selGame">
+  	<option value="hard">hard</option>
+  	<option value="easy">easy</option>
+	</select> 
+	<div></div>
+	<div class="mbutton">Close</div>
+	<div class="start">Start</div>
+</div>
+</div>
+</body>
+<script src="js/jquery-2.1.4.min.js"></script>
+<script>
+$(document).ready(function() {
+	var qas;
+	var chsnQst = [10];
+	var curntQ = 0;
+	var nuQuestions = 3;
+	var answers = [10];
+	var game;
+	
+	function showQuestion(qstNo) {
+		$('#question').text("Question " + (curntQ + 1) + ": What is the capital city of " + qas[qstNo].ct + "?");
+	}
+	
+	function showOptions(rndAns) {
+		$('#aOne').text(qas[rndAns[0]].cp);
+		$('#vOne').val(qas[rndAns[0]].cp);
+		$('#aTwo').text(qas[rndAns[1]].cp);
+		$('#vTwo').val(qas[rndAns[1]].cp);
+		$('#aThree').text(qas[rndAns[2]].cp);
+		$('#vThree').val(qas[rndAns[2]].cp);
+		$('#aFour').text(qas[rndAns[3]].cp);
+		$('#vFour').val(qas[rndAns[3]].cp);
+		$('#aFive').text(qas[rndAns[4]].cp);
+		$('#vFive').val(qas[rndAns[4]].cp);
+	}
+
+	function pick_unique_numbers(count) {
+		if(qas.length < count) {
+			return false;
+		}
+		var spacing = Math.floor(qas.length / count);
+		//console.log(spacing);
+		for(var x = 0; x < count; x++) {		
+			if((x + 1) == count) {
+				chsnQst[x] = Math.floor((Math.random() * (qas.length - (x * spacing))) + (x * spacing));
+			}
+			else {
+				if(x == 0) {
+					chsnQst[x] = Math.floor(Math.random() * spacing);
+					//chsnQst[x] = 99;
+				}
+				else {
+					//chsnQst[x] = Math.floor((Math.random() * (((x + 1) * spacing) - 1)) + (x * spacing) );
+					chsnQst[x] = Math.floor((Math.random() * spacing) + (x * spacing) );
+				}
+			}
+		}
+		return true;
+	}
+
+	function pickOptions(count, ans) {
+		if(qas.length < count) {
+			return false;
+		}
+		count++;
+		var tVar = [count];
+		position = Math.floor(Math.random() * count);
+		var tmp, x = 0;
+		tVar[position] = ans;
+		while (x < count) {
+			if(x == position) {
+				x++;
+			}else {		
+				tmp = Math.floor(Math.random() * qas.length);
+				if($.inArray(tmp, tVar) == -1) {
+					tVar[x] = tmp;
+					x++;
+				}
+			}
+		}
+		return tVar;
+	}
+	
+	function updateResults(){
+		$('#results').empty();
+		$('#results').append("<h4>Quiz Results</h4>");
+		$('#results').append("<tr><th>Country</th><th>Your answer</th><th>Correct</th><tr>");
+		var res;
+		var count =0;
+		for(var x = 0; x < curntQ; x++) {
+				if(qas[chsnQst[x]].cp == answers[x]) {
+					res = " <span class='green'>Correct</span>";
+					count++;
+				}else {
+					res = " Incorrect (" + qas[chsnQst[x]].cp + ")";
+				}
+				$('#results').append("<tr><td>" + qas[chsnQst[x]].ct + "</td><td>" + answers[x] + "</td><td>" + res + "</td></tr>");
+
+		}
+		$('#results').append("</table>")
+		$('#results').append("<h3>Your performance: " + count + "/" + nuQuestions + "</h3>")
+		console.log(answers);
+	}
+
+	$.getJSON('cities.json', function(json) {
+		$.each(json, function(key, val) {
+			qas = val;
+        	//$.each(val, function(key, val) {
+				//QAs = val;
+			//});//end each
+		}); // end each
+    });
+	$('.start').click(function( event )
+    	{	
+			$('#menu').hide();			
+			nuQuestions = $('#selNo').val();
+			if(!pick_unique_numbers(nuQuestions)) {
+				console.log("error - couldn't pick numbers");
+			}
+			//console.log(chsnQst);
+			curntQ = 0;
+			showQuestion(chsnQst[0]);
+			$('#results').hide();
+			$('#controls').show();
+			if($('#selGame').val() == 'easy') {
+				game = 'easy';
+				var rndAns;				
+				rndAns = pickOptions(4,chsnQst[0]);
+				showOptions(rndAns);
+				$('#ansInpOne').hide();
+				$('#ansInpTwo').show();
+				$('input:radio[name=answer2]').prop('checked', false);
+			}
+			else {
+				game = 'hard';
+				$('#ansInpOne').show();
+				$('#ansInpTwo').hide();
+			}
+			for(var x; x < 10; x++) {
+				answers[x] = null;
+			}
+    	}); //end start
+
+	$('#next').click(function( event )
+    	{	
+			
+			if(game == 'hard') {
+				answers[curntQ] = $('#answer').val();
+				console.log('h');
+			}else {
+				answers[curntQ] = $('input:radio[name=answer2]:checked').val();
+				$('input:radio[name=answer2]').prop('checked', false);
+			}
+			
+			curntQ++;
+			if(curntQ == nuQuestions) {
+				console.log("finished");
+				$('#controls').hide();
+				updateResults();
+				$('#results').show();
+				return;
+			}
+			if(game == 'easy') {
+				var rndAns;				
+				rndAns = pickOptions(4,chsnQst[curntQ]);
+				showOptions(rndAns);
+			}
+			showQuestion(chsnQst[curntQ]);
+			//event.preventDefault();
+    	}); //end start
+
+	$('#mmenu').click(function( event )
+	{
+		if($('#menu').is(':visible')) {
+			$('#menu').hide();	
+		}
+		else {
+			$('#menu').show();	
+		}
+	}); //end mmenu click
+});
+</script>
+</html> 
